@@ -1,6 +1,10 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example');
+var stage1 = { preload: preload, create: create, update: update }
+game.state.add('menu', stage1);
+game.state.start('menu');
 
-function preload() {
+function preload() 
+{
 
   game.load.image('space', 'assets/deep-space.jpg');
   game.load.image('bullet', 'assets/bullets.png');
@@ -61,6 +65,8 @@ function create() {
   cursors = game.input.keyboard.createCursorKeys();
   game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
+  player.animations.add('left', [0, 1, 2, 3], 10, true);
+  player.animations.add('right', [5, 6, 7, 8], 10, true);
 
 }
 
@@ -74,21 +80,21 @@ function update() {
   //     // game.physics.arcade.collide(,)
   //   });
 
+  player.body.velocity.x = 0;
+  player.body.velocity.y = 0;
   if (cursors.up.isDown) {
-    game.physics.arcade.accelerationFromRotation(player.rotation, 200, player.body.acceleration);
-  }
-  else {
-    player.body.acceleration.set(0);
+    player.body.velocity.y = -100;
   }
 
-  if (cursors.left.isDown) {
-    player.body.angularVelocity = -300;
+  if (cursors.left.isDown) 
+  {
+    player.body.velocity.x = -100;
   }
-  else if (cursors.right.isDown) {
-    player.body.angularVelocity = 300;
+  if (cursors.right.isDown) {
+    player.body.velocity.x = 100;
   }
-  else {
-    player.body.angularVelocity = 0;
+  if (cursors.down.isDown) {
+    player.body.velocity.y = 100;
   }
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
