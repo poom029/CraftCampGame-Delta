@@ -9,6 +9,7 @@ function preloadmenu() {
   game.load.image('bullet', 'assets/bullets.png');
   game.load.image('ship', 'assets/ship.png');
   game.load.image('enemyShip', 'assets/enemyShip.png');
+  game.load.spritesheet('junja','assets/junja.png',89/3,97/3,9);
 }
 
 var sprite;
@@ -24,6 +25,14 @@ var player
 function createmenu() {
 
   game.stage.disableVisibilityChange = true;
+
+  //  A spacey background
+  game.add.tileSprite(0, 0, game.width, game.height, 'space');
+
+  var junja = game.add.sprite(300,200,'junja');
+  var walk = junja.animations.add('walk',[3,4,5]);
+  junja.animations.play('walk', 5 , true);
+  junja.scale.setTo(2,2)
   
 
   //  This will run in Canvas mode, so let's gain a little speed and display
@@ -33,8 +42,7 @@ function createmenu() {
   //  We need arcade physics
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  //  A spacey background
-  game.add.tileSprite(0, 0, game.width, game.height, 'space');
+  
 
   //  Our ships bullets
   bullets = game.add.group();
