@@ -1,16 +1,14 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example');
-var stage1 = { preload: preload, create: create, update: update };
 
-game.state.add('Menu',stage1)
-game.state.start('Menu')
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'Once') 
+var stage1 = { preload: preloadmenu, create: createmenu, update: updatemenu }
+game.state.add('menu',stage1)
+game.state.start('menu')
 
-function preload() {
-
+function preloadmenu() {
   game.load.image('space', 'assets/deep-space.jpg');
   game.load.image('bullet', 'assets/bullets.png');
   game.load.image('ship', 'assets/ship.png');
   game.load.image('enemyShip', 'assets/enemyShip.png');
-
 }
 
 var sprite;
@@ -23,7 +21,7 @@ var bulletTime = 0;
 var player
 
 
-function create() {
+function createmenu() {
 
   game.stage.disableVisibilityChange = true;
   
@@ -49,7 +47,7 @@ function create() {
   bullets.setAll('anchor.y', 0.5);
 
   //  Our player ship
-  player = game.add.sprite(300, 300, 'ship');
+  player = game.add.sprite(400, 400, 'ship');
   player.anchor.set(0.5);
   player.health = 3
 
@@ -65,12 +63,14 @@ function create() {
   cursors = game.input.keyboard.createCursorKeys();
   game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
+  player.animations.add('left', [0, 1, 2, 3], 10, true);
+  player.animations.add('right', [5, 6, 7, 8], 10, true);
 
 }
 
 
 
-function update() {
+function updatemenu() {
 
 
   // bullets.forEachExists(function (bullet) {
@@ -82,7 +82,6 @@ function update() {
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
   }
-
   if (cursors.left.isDown) {
     player.body.velocity.x= -300;
   }
