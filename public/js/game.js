@@ -7,7 +7,6 @@ function preloadmenu() {
   game.load.image('bullet', 'assets/bullets.png');
   game.load.image('ship', 'assets/ship.png');
   game.load.image('enemyShip', 'assets/enemyShip.png');
-
 }
 
 var sprite;
@@ -74,27 +73,38 @@ function updatemenu() {
   //     game.physics.arcade.overlap(player, bullet, collisionPlayer, null, this);
   //     // game.physics.arcade.collide(,)
   //   });
+  player.body.velocity.x = 0;
+  player.body.velocity.y = 0;
+  player.body.angularVelocity = 0;
 
-  if (cursors.up.isDown) {
-    player.body.velocity.y = -100
+  if (cursors.up.isDown) 
+  {
+    player.body.velocity.y = -300;
   }
-  
-  else if (cursors.left.isDown) {
-    player.body.velocity.x = -100
+  else if (cursors.down.isDown)
+  {
+    player.body.velocity.y = 300;
   }
-  else if (cursors.right.isDown) {
-    player.body.velocity.x = 100
-  }
-  else if (cursors.down.isDown) {
-    player.body.velocity.y = 100
-  }
-  else {
-    player.body.velocity.x=0
-    player.body.velocity.y=0
-    
+  else
+  {
+    player.body.velocity.set(0);
   }
 
-  if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+  if (cursors.left.isDown) 
+  {
+    player.body.velocity.x = -300;
+  }
+  else if (cursors.right.isDown) 
+  {
+    player.body.velocity.x = 300;
+  }
+  else 
+  {
+    player.body.Velocity = 0;
+  }
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) 
+  {
     fireBullet();
   }
 
