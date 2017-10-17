@@ -1,4 +1,8 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example');
+var stage1 = { preload: preload, create: create, update: update };
+
+game.state.add('Menu',stage1)
+game.state.start('Menu')
 
 function preload() {
 
@@ -53,7 +57,7 @@ function create() {
   //  and its physics settings
   game.physics.enable(player, Phaser.Physics.ARCADE);
 
-  player.body.drag.set(100);
+  // player.body.drag.set(0);
   player.body.maxVelocity.set(200);
   player.body.collideWorldBounds = true;
 
@@ -73,23 +77,23 @@ function update() {
   //     game.physics.arcade.overlap(player, bullet, collisionPlayer, null, this);
   //     // game.physics.arcade.collide(,)
   //   });
-
+  player.body.velocity.y = 0;
+  player.body.velocity.x = 0;
   if (cursors.up.isDown) {
-    game.physics.arcade.accelerationFromRotation(player.rotation, 200, player.body.acceleration);
-  }
-  else {
-    player.body.acceleration.set(0);
+    player.body.velocity.y = -300;
   }
 
   if (cursors.left.isDown) {
-    player.body.angularVelocity = -300;
+    player.body.velocity.x= -300;
   }
-  else if (cursors.right.isDown) {
-    player.body.angularVelocity = 300;
+  if (cursors.right.isDown) {
+    player.body.velocity.x = 300;
   }
-  else {
-    player.body.angularVelocity = 0;
+  if (cursors.down.isDown) {
+    player.body.velocity.y = 300;
   }
+
+
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     fireBullet();
@@ -120,5 +124,3 @@ function fireBullet() {
   
 
 }
-
-
