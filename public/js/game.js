@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(1368, 768, Phaser.CANVAS, 'Once') 
+var game = new Phaser.Game(1000, 700, Phaser.CANVAS, 'game') 
 var stage1 = { preload: preloadmenu, create: createmenu, update: updatemenu }
 game.state.add('menu',stage1)
 game.state.start('menu')
@@ -44,8 +44,8 @@ function createmenu() {
   var stopwalk = player.animations.add( 'stopwalk' ,[1]);
   
 
-  //  This will run in Canvas mode, so let's gain a little speed and display
-  game.renderer.clearBeforeRender = false;
+  //  if set false this will run in Canvas mode, so it's gain a little speed and display
+  game.renderer.clearBeforeRender = true;
   game.renderer.roundPixels = true;
 
   //  We need arcade physics
