@@ -1,11 +1,11 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'Once') 
+var game = new Phaser.Game(1368, 768, Phaser.CANVAS, 'Once') 
 var stage1 = { preload: preloadmenu, create: createmenu, update: updatemenu }
 game.state.add('menu',stage1)
 game.state.start('menu')
 
 function preloadmenu() {
-  game.load.image('space', 'assets/deep-space.jpg');
+  game.load.image('space', 'assets/B2F2.png');
   game.load.image('bullet', 'assets/bullets.png');
   game.load.image('ship', 'assets/ship.png');
   game.load.image('enemyShip', 'assets/enemyShip.png');
@@ -25,9 +25,11 @@ var player
 function createmenu() {
 
   game.stage.disableVisibilityChange = true;
+ 
 
   //  A spacey background
-  game.add.tileSprite(0, 0, game.width, game.height, 'space');
+  game.add.tileSprite(0, 0, 1920, 1920, 'space');
+  game.world.setBounds(0, 0, 1920, 1920);
   player = game.add.sprite(400, 400, 'junja');
 
   var junja = game.add.sprite(300,200,'junja');
@@ -80,7 +82,7 @@ function createmenu() {
 
   //player.animations.add('left', [0, 1, 2, 3], 10, true);
   //player.animations.add('right', [5, 6, 7, 8], 10, true);
-
+  game.camera.follow(player);
 }
 
 
