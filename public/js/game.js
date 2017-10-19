@@ -4,6 +4,8 @@ var game = new Phaser.Game(1000, 600, Phaser.CANVAS, 'Once')
 var menu = { preload: preloadtMenu, create: createtMenu }
 game.state.add('menu',menu)
 game.state.start('menu')
+var stage1 = { preload: preloadRoom_1, create: createRoom_1, update: updateRoom_1 }
+game.state.add('classroom_1',stage1)
 var stage2 = { preload: preloadstage, create: createstage, update: updatestage }
 game.state.add('stage2',stage2)
 // game.state.start('stage2')
@@ -36,8 +38,7 @@ function createtMenu()
   
 function actionOnClickStart ()
 {
-  game.state.add('stage2',stage2)
-  game.state.start('stage2')
+  game.state.start('classroom_1')
 }
 
 var scene = { preload: preloadScene , create: createScene , update: updateScene }
@@ -56,7 +57,7 @@ function updateScene()
 
 }
 
-var stage1 = { preload: preloadRoom_1, create: createRoom_1, update: updateRoom_1 }
+
 
 var map
 function preloadRoom_1() 
@@ -117,6 +118,7 @@ function createRoom_1()
   wallL.body.immovable = true;
 
   classroomdoor = game.add.sprite(990,160 , 'classDoor');
+  classroomdoor.visible = false;
   game.physics.enable(classroomdoor, Phaser.Physics.ARCADE);
   classroomdoor.body.immovable = true;
 
