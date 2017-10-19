@@ -14,7 +14,7 @@ game.state.add('stage2',stage2)
 function preloadtMenu()
 {
 
-  game.load.image('MenuBackground', 'assets/menu/BGMenu.png');
+  game.load.image('MenuBackground', 'assets/menu/BGnew2.png');
   game.load.spritesheet('MenuButtonStart', 'assets/menu/startspite.png',393,390/3,3);
   game.load.image('MenuButtonHelp', 'assets/menu/help.png');
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
