@@ -1,50 +1,110 @@
 
-var game = new Phaser.Game(1000, 700, Phaser.CANVAS, 'game') 
-var stage1 = { preload: preloadmenu, create: createmenu, update: updatemenu }
-game.state.add('menu',stage1)
+var game = new Phaser.Game(1000, 700, Phaser.CANVAS, 'Once') 
+
+var menu = { preload: preloadtMenu, create: createtMenu }
+game.state.add('menu',menu)
 game.state.start('menu')
 
+function preloadtMenu()
+{
+
+  game.load.image('MenuBackground', 'assets/menu/BGMenu.png');
+  game.load.image('MenuButtonStart', 'assets/menu/start.png');
+  game.load.image('MenuButtonExit', 'assets/menu/exit.png');
+  game.load.image('MenuButtonHelp', 'assets/menu/help.png');
+  game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
+  game.load.image('MenuBGSetting', 'assets/menu/BGSetting.png');
+
+}
+
+function createtMenu()
+{
+  background = game.add.tileSprite(0, 0, 1000, 700, 'MenuBackground');
+  
+      button1 = game.add.button(game.world.centerX - 120, 250, 'MenuButtonStart', actionOnClick, this, 2, 1, 0);
+      button1.scale.setTo(1, 0.9 );
+
+      button2 = game.add.button(game.world.centerX - 20, 400, 'MenuButtonExit');
+      button2.scale.setTo(0.5, 0.5);
+
+      setting = game.add.image(900,520,'MenuButtonSetting');
+      setting.scale.setTo = (0.01, 0.02);
+
+  
+      button.onInputOver.add(over, this);
+      button.onInputOut.add(out, this);
+      button.onInputUp.add(up, this);
+  
+ }
+  
+function up() 
+{
+    console.log('button up', arguments);
+}
+  
+function over() 
+{
+    console.log('button over');
+}
+  
+function out() {
+    console.log('button out');
+}
+  
+function actionOnClick ()
+{
+  game.state.add('chooseScene',stage1)
+  game.state.start('chooseScene')
+}
+
+var scene = { preload: preloadScene , create: createScene , update: updateScene }
+function preloadScene()
+{
+  game.load.image('waikruScene', 'assets')
+}
+
+function createScene()
+{
+ background = game.add.tileSprite(0, 0, 800, 600, 'waikruScene');
+}
+
+function updateScene()
+{
+
+}
+
+var stage1 = { preload: preloadmenu, create: createmenu, update: updatemenu }
+
+var map
 function preloadmenu() {
-  game.load.image('space', 'assets/B2F2.png');
-  game.load.image('bullet', 'assets/bullets.png');
-  game.load.image('ship', 'assets/ship.png');
-  game.load.image('enemyShip', 'assets/enemyShip.png');
-  game.load.spritesheet('junja','assets/junja.png',89/3,95/3,9);
+  game.load.image('classroom', 'assets/F2/startclassfull.png');
+  game.load.spritesheet('junja','assets/junja.png',90/3,127/4,12);
 }
 
 var sprite;
 var cursors;
-
-var bullet;
-var bullets;
-var bulletTime = 0;
-
 var player
 
 
-function createmenu() {
+function createmenu() 
+{
 
   game.stage.disableVisibilityChange = true;
  
 
   //  A spacey background
-  game.add.tileSprite(0, 0, 1920, 1920, 'space');
-  game.world.setBounds(0, 0, 1920, 1920);
+  game.add.tileSprite(0, 0, 1028, 762, 'classroom');
+  game.world.setBounds(0, 0, 1028, 762);
   player = game.add.sprite(400, 400, 'junja');
+  player.scale.setTo(2,2);
 
-  var junja = game.add.sprite(300,200,'junja');
-  var walk = junja.animations.add('walk',[3,4,5]);
-  junja.animations.play('walk', 5 , true);
-  junja.scale.setTo(2,2)
-
-  //var walku = player.animations.add('walku',[])
+  var walku = player.animations.add('walku',[9,10,11])
   var walkl = player.animations.add( 'walkl' , [3,4,5]);
   var walkr = player.animations.add( 'walkr' , [6,7,8]);
   var walkd = player.animations.add( 'walkd' , [0,1,2]);
-  var stopwalk = player.animations.add( 'stopwalk' ,[1]);
   
 
-  //  if set false this will run in Canvas mode, so it's gain a little speed and display
+  //  This will run in Canvas mode, so let's gain a little speed and display
   game.renderer.clearBeforeRender = true;
   game.renderer.roundPixels = true;
 
@@ -58,22 +118,9 @@ function createmenu() {
   bullets.enableBody = true;
   bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
-  //  All 60 of them
-  bullets.createMultiple(60, 'bullet');
-  bullets.setAll('anchor.x', 0.5);
-  bullets.setAll('anchor.y', 0.5);
-
-  //  Our player ship
-  
-  player.anchor.set(0.5);
-  player.health = 3
-
-
   //  and its physics settings
   game.physics.enable(player, Phaser.Physics.ARCADE);
 
-  // player.body.drag.set(0);
-  player.body.maxVelocity.set(200);
   player.body.collideWorldBounds = true;
 
   //  Game input
@@ -87,8 +134,9 @@ function createmenu() {
 
 
 
-function updatemenu() {
-
+function updatemenu()
+ {
+  player.body.collideWorldBounds = true;
 
    bullets.forEachExists(function (bullet) {
        game.physics.arcade.overlap(player, bullet, collisionPlayer, null, this);
@@ -98,8 +146,9 @@ function updatemenu() {
   player.body.velocity.x = 0;
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
-    //player.animations.play('walku', 5 , true);
+    player.animations.play('walku', 5 , true);
   }
+
   else if (cursors.left.isDown) {
     player.body.velocity.x= -300;
     player.animations.play('walkl', 5 , true)
@@ -112,40 +161,8 @@ function updatemenu() {
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5 , true)
   }
- else {
-   player.body.velocity.y = 0
-   player.body.velocity.x = 0
-   player.animations.play('stopwalk', 5 , true)
-}
-   
-
-
-  //if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-  //  fireBullet();
- // }
-
-  // screenWrap(player);
-}
-
-
-
-function fireBullet() {
-
-  if (game.time.now > bulletTime) {
-    bullet = bullets.getFirstExists(false);
-
-    if (bullet) {
-      bullet.reset(player.body.x + 16, player.body.y + 16);
-      bullet.lifespan = 2000;
-      bullet.rotation = player.rotation;
-      game.physics.arcade.velocityFromRotation(player.rotation, 400, bullet.body.velocity);
-      
-      
-      bulletTime = game.time.now + 800;
-      
-    }
+  else
+  {
+      player.animations.stop();
   }
-  
-  
-
 }
