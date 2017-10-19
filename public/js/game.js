@@ -40,11 +40,11 @@ function createtMenu()
 
     var dialogCounter = 0;
     var dialogMMenu = ['สวัสดี','ยินดีต้อนรับ','จบ']
-    text = game.add.text(0, 0, dia[dialogCounter++], style);
+    // text = game.add.text(0, 0, dia[dialogCounter++], style);
     // text.setText(dia[dialogCounter++])
     // text.setText(dia[dialogCounter++])
-    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-    text.setTextBounds(game.world.centerX, 450);
+    // text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+    // text.setTextBounds(game.world.centerX, 450);
 
 
 
@@ -434,6 +434,6 @@ function updatestage()
   }
   if (spacbar.isDown && spacebarCooldown<=game.time.now){
     console.log ('ห้ะ')
-    spacebarCooldown = game.time.now + 500;
+    spacebarCooldown = game.time.now + 1000;
   }
 }
