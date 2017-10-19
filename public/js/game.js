@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(1000, 700, Phaser.CANVAS, 'Once') 
+var game = new Phaser.Game(1000, 600, Phaser.CANVAS, 'Once') 
 
 var menu = { preload: preloadtMenu, create: createtMenu }
 game.state.add('menu',menu)
@@ -21,36 +21,35 @@ function createtMenu()
 {
   background = game.add.tileSprite(0, 0, 1000, 700, 'MenuBackground');
   
-      button1 = game.add.button(game.world.centerX - 120, 250, 'MenuButtonStart', actionOnClick, this, 2, 1, 0);
-      button1.scale.setTo(1, 0.9 );
+    button1 = game.add.button(game.world.centerX - 120, 250, 'MenuButtonStart', actionOnClick, this, 2, 1, 0);
+    button1.scale.setTo(1, 0.9 );
 
-      button2 = game.add.button(game.world.centerX - 20, 400, 'MenuButtonExit');
-      button2.scale.setTo(0.5, 0.5);
+    button2 = game.add.button(game.world.centerX - 20, 400, 'MenuButtonExit');
+    button2.scale.setTo(0.5, 0.5);
 
-      setting = game.add.image(900,520,'MenuButtonSetting');
-      setting.scale.setTo = (0.01, 0.02);
+    setting = game.add.image(900,520,'MenuButtonSetting');
+    setting.scale.setTo = (0.01, 0.02);
+    button.onInputOver.add(over, this); 
+    button.onInputOut.add(out, this); 
+    button.onInputUp.add(up, this); 
+   
+} 
+   
+function up()  
+{ 
+    console.log('button up', arguments); 
+} 
+   
+function over()  
+{ 
+    console.log('button over'); 
+} 
+   
+function out() 
+{ 
+    console.log('button out'); 
+} 
 
-  
-      button.onInputOver.add(over, this);
-      button.onInputOut.add(out, this);
-      button.onInputUp.add(up, this);
-  
- }
-  
-function up() 
-{
-    console.log('button up', arguments);
-}
-  
-function over() 
-{
-    console.log('button over');
-}
-  
-function out() {
-    console.log('button out');
-}
-  
 function actionOnClick ()
 {
   game.state.add('chooseScene',stage1)
