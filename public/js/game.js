@@ -30,6 +30,22 @@ function createtMenu()
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
 
+    var bar = game.add.graphics();
+    bar.beginFill(0x000000, 0.2);
+    bar.drawRect(0, 400, 1000, 100);
+
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
+    var dialogCounter = 0;
+    var dialogMMenu = ['สวัสดี','ยินดีต้อนรับ','จบ']
+    text = game.add.text(0, 0, dia[dialogCounter++], style);
+    // text.setText(dia[dialogCounter++])
+    // text.setText(dia[dialogCounter++])
+    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+    text.setTextBounds(game.world.centerX, 450);
+
+
+
   
  }
   
@@ -228,13 +244,14 @@ function createstage()
 
   //  Game input
   cursors = game.input.keyboard.createCursorKeys();
-  game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+  spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
 
   //player.animations.add('left', [0, 1, 2, 3], 10, true);
   //player.animations.add('right', [5, 6, 7, 8], 10, true);
   game.camera.follow(player);
 }
 
+var spacebarCooldown = 0;
 function updatestage()
   
   {
@@ -265,5 +282,9 @@ function updatestage()
   else
   {
       player.animations.stop();
+  }
+  if (spacbar.isDown && spacebarCooldown<=game.time.now){
+    console.log ('ห้ะ')
+    spacebarCooldown = game.time.now + 500;
   }
 }
