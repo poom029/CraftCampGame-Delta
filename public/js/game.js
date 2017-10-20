@@ -118,7 +118,7 @@ function updateHT()
   player.body.velocity.x = 0;
 
   if (cursors.up.isDown) {
-    fs.play()
+    
     player.body.velocity.y = -300;
     player.animations.play('walku', 5 , true);
     
@@ -315,18 +315,25 @@ function updateRoom_1()
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
     player.animations.play('walku', 5 , true);
+    if(!fs.isPlaying){
+      fs.play()
+    }
+    
   }
   else if (cursors.left.isDown) {
     player.body.velocity.x= -300;
     player.animations.play('walkl', 5 , true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.right.isDown) {
     player.body.velocity.x = 300;
     player.animations.play('walkr', 5 , true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.down.isDown) {
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5 , true)
+    if(!fs.isPlaying){fs.play()}
   }
   else
   {
@@ -504,18 +511,22 @@ function updateRoom_1_out()
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
     player.animations.play('walku', 5, true);
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.left.isDown) {
     player.body.velocity.x = -300;
     player.animations.play('walkl', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.right.isDown) {
     player.body.velocity.x = 300;
     player.animations.play('walkr', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.down.isDown) {
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else {
     player.animations.stop();
@@ -630,19 +641,23 @@ function updatestage() {
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
     player.animations.play('walku', 5, true);
+    if(!fs.isPlaying){fs.play()}
   }
 
   else if (cursors.left.isDown) {
     player.body.velocity.x = -300;
     player.animations.play('walkl', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.right.isDown) {
     player.body.velocity.x = 300;
     player.animations.play('walkr', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else if (cursors.down.isDown) {
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5, true)
+    if(!fs.isPlaying){fs.play()}
   }
   else {
     player.animations.stop();
