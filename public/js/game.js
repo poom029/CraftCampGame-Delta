@@ -15,6 +15,7 @@ function preloadtMenu()
 {
 
   game.load.image('MenuBackground', 'assets/menu/BGMenu.png');
+  game.load.image('MenuBackground', 'assets/menu/BGnew2.png');
   game.load.spritesheet('MenuButtonStart', 'assets/menu/startspite.png',393,390/3,3);
   game.load.image('MenuButtonHelp', 'assets/menu/help.png');
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
@@ -41,10 +42,13 @@ function createtMenu()
     var dialogCounter = 0;
     var dialogMMenu = ['สวัสดี','ยินดีต้อนรับ','จบ']
     text = game.add.text(0, 0, dia[dialogCounter++], style);
+    // text = game.add.text(0, 0, dia[dialogCounter++], style);
     // text.setText(dia[dialogCounter++])
     // text.setText(dia[dialogCounter++])
     text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
     text.setTextBounds(game.world.centerX, 450);
+    // text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+    // text.setTextBounds(game.world.centerX, 450);
 
 
 
@@ -156,6 +160,14 @@ function createRoom_1()
   chairT = game.add.sprite(700 ,550 , 'Chair1');
   layerT.add(chairT);
 
+  // function createChairB()
+  // {
+  //   for(var chairB_x = 0; chairB_x < 3; chairB_x++)
+  //   {
+  //     var chairBottom = chairB.create(chairB_x * 48, 50 + chairB_x, 'Chair2');
+  //   }
+  // }
+
   chairB = game.add.sprite(250 ,400 , 'Chair2');
   layerB.add(chairB);
   chairB = game.add.sprite(400 ,400 , 'Chair2');
@@ -177,34 +189,42 @@ function createRoom_1()
 
   
   chairCollider = game.add.sprite(255, 440 , 'ChairColli')
+  chairCollider = game.add.sprite(250, 420 , 'ChairColli')
   game.physics.enable(chairCollider, Phaser.Physics.ARCADE);
   chairCollider.body.immovable = true;
 
   chairCollider2 = game.add.sprite(405, 440 , 'ChairColli')
+  chairCollider2 = game.add.sprite(400, 420 , 'ChairColli')
   game.physics.enable(chairCollider2, Phaser.Physics.ARCADE);
   chairCollider2.body.immovable = true;
 
   chairCollider3 = game.add.sprite(555, 440 , 'ChairColli')
+  chairCollider3 = game.add.sprite(550, 420 , 'ChairColli')
   game.physics.enable(chairCollider3, Phaser.Physics.ARCADE);
   chairCollider3.body.immovable = true;
 
   chairCollider4 = game.add.sprite(705, 440 , 'ChairColli')
+  chairCollider4 = game.add.sprite(700, 420 , 'ChairColli')
   game.physics.enable(chairCollider4, Phaser.Physics.ARCADE);
   chairCollider4.body.immovable = true;
      //Row 2
   chairCollider5 = game.add.sprite(255, 590 , 'ChairColli')
+  chairCollider5 = game.add.sprite(250, 570 , 'ChairColli')
   game.physics.enable(chairCollider5, Phaser.Physics.ARCADE);
   chairCollider5.body.immovable = true;
 
   chairCollider6 = game.add.sprite(405, 590 , 'ChairColli')
+  chairCollider6 = game.add.sprite(400, 570 , 'ChairColli')
   game.physics.enable(chairCollider6, Phaser.Physics.ARCADE);
   chairCollider6.body.immovable = true;
 
   chairCollider7 = game.add.sprite(555, 590 , 'ChairColli')
+  chairCollider7 = game.add.sprite(550, 570 , 'ChairColli')
   game.physics.enable(chairCollider7, Phaser.Physics.ARCADE);
   chairCollider7.body.immovable = true;
 
   chairCollider8 = game.add.sprite(705, 590 , 'ChairColli')
+  chairCollider8 = game.add.sprite(700, 570 , 'ChairColli')
   game.physics.enable(chairCollider8, Phaser.Physics.ARCADE);
   chairCollider8.body.immovable = true;
 
@@ -393,6 +413,7 @@ function createstage()
 
   //  Game input
   cursors = game.input.keyboard.createCursorKeys();
+  game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
   spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
 
   //player.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -435,5 +456,6 @@ function updatestage()
   if (spacbar.isDown && spacebarCooldown<=game.time.now){
     console.log ('ห้ะ')
     spacebarCooldown = game.time.now + 500;
+    spacebarCooldown = game.time.now + 1000;
   }
 }
