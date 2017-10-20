@@ -14,7 +14,6 @@ game.state.add('stage2',stage2)
 function preloadtMenu()
 {
 
-  game.load.image('MenuBackground', 'assets/menu/BGMenu.png');
   game.load.image('MenuBackground', 'assets/menu/BGnew2.png');
   game.load.spritesheet('MenuButtonStart', 'assets/menu/startspite.png',393,390/3,3);
   game.load.image('MenuButtonHelp', 'assets/menu/help.png');
@@ -110,11 +109,16 @@ var TtableCollider
 
 function createRoom_1() 
 {
+
   layerBG = game.add.group();
   layerB = game.add.group();
   layer = game.add.group();
   layerT = game.add.group();
   layerTT = game.add.group();
+
+  layerCollider = game.add.group();
+  layerCollider.enableBody = true;
+  layerCollider.physicsBodyType = Phaser.Physics.ARCADE;
  
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -139,84 +143,34 @@ function createRoom_1()
   game.physics.enable(classroomdoor, Phaser.Physics.ARCADE);
   classroomdoor.body.immovable = true;
 
-  chairT = game.add.sprite(250 ,400 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(400 ,400 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(550 ,400 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(700 ,400 , 'Chair1');
-  layerT.add(chairT);
-  //Row 2
-  chairT = game.add.sprite(250 ,550 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(400 ,550 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(550 ,550 , 'Chair1');
-  layerT.add(chairT);
-  chairT = game.add.sprite(700 ,550 , 'Chair1');
-  layerT.add(chairT);
+  var cStuT;
+  for (var YcStT = 0; YcStT < 2; YcStT++)
+   {
+       for (var XcStT = 0; XcStT < 4; XcStT++)
+      {
+        cStuT = layerT.create(250 + (XcStT * 150), 400 + (YcStT * 150), 'Chair1');
+      }
+  }
 
-  // function createChairB()
-  // {
-  //   for(var chairB_x = 0; chairB_x < 3; chairB_x++)
-  //   {
-  //     var chairBottom = chairB.create(chairB_x * 48, 50 + chairB_x, 'Chair2');
-  //   }
-  // }
-
-  chairB = game.add.sprite(250 ,400 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(400 ,400 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(550 ,400 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(700 ,400 , 'Chair2');
-  layerB.add(chairB);
-    //Row 2
-  chairB = game.add.sprite(250 ,550 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(400 ,550 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(550 ,550 , 'Chair2');
-  layerB.add(chairB);
-  chairB = game.add.sprite(700 ,550 , 'Chair2');
-  layerB.add(chairB);
-
-
+  var cStuB;
+  for (var YcStB = 0; YcStB < 2; YcStB++)
+  {
+      for (var XcStB = 0; XcStB < 4; XcStB++)
+      {
+        cStuB = layerB.create(250 + (XcStB * 150), 400 + (YcStB * 150), 'Chair2');
+      }
+  }
   
-  chairCollider = game.add.sprite(250, 420 , 'ChairColli')
-  game.physics.enable(chairCollider, Phaser.Physics.ARCADE);
-  chairCollider.body.immovable = true;
-
-  chairCollider2 = game.add.sprite(400, 420 , 'ChairColli')
-  game.physics.enable(chairCollider2, Phaser.Physics.ARCADE);
-  chairCollider2.body.immovable = true;
-
-  chairCollider3 = game.add.sprite(550, 420 , 'ChairColli')
-  game.physics.enable(chairCollider3, Phaser.Physics.ARCADE);
-  chairCollider3.body.immovable = true;
-
-  chairCollider4 = game.add.sprite(700, 420 , 'ChairColli')
-  game.physics.enable(chairCollider4, Phaser.Physics.ARCADE);
-  chairCollider4.body.immovable = true;
-     //Row 2
-  chairCollider5 = game.add.sprite(250, 570 , 'ChairColli')
-  game.physics.enable(chairCollider5, Phaser.Physics.ARCADE);
-  chairCollider5.body.immovable = true;
-
-  chairCollider6 = game.add.sprite(400, 570 , 'ChairColli')
-  game.physics.enable(chairCollider6, Phaser.Physics.ARCADE);
-  chairCollider6.body.immovable = true;
-
-  chairCollider7 = game.add.sprite(550, 570 , 'ChairColli')
-  game.physics.enable(chairCollider7, Phaser.Physics.ARCADE);
-  chairCollider7.body.immovable = true;
-
-  chairCollider8 = game.add.sprite(700, 570 , 'ChairColli')
-  game.physics.enable(chairCollider8, Phaser.Physics.ARCADE);
-  chairCollider8.body.immovable = true;
-
+  var cStuColli
+  for (var YcStColli = 0; YcStColli < 2; YcStColli++)
+  {
+      for (var XcStColli = 0; XcStColli < 4; XcStColli++)
+      {
+        cStuColli = layerCollider.create(250 + (XcStColli * 150), 420 + (YcStColli * 150), 'ChairColli');
+        cStuColli.body.immovable = true;
+      }
+  }
+  
   TtableT = game.add.sprite(160, 250, 'TTableTop')
   TtableT.scale.setTo(1.5,1.5)
   layerT.add(TtableT);
@@ -236,8 +190,6 @@ function createRoom_1()
   game.physics.enable(TtableCollider2, Phaser.Physics.ARCADE);
   TtableCollider2.body.immovable = true;
   layerBG.add(TtableCollider2);
-
-
 
   player = game.add.sprite(400, 200, 'junja');
   game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -278,14 +230,7 @@ function updateRoom_1()
   game.physics.arcade.collide(player, walltop);
   game.physics.arcade.collide(player, wallRight1);
   game.physics.arcade.collide(player, wallL);
-  game.physics.arcade.collide(player, chairCollider);
-  game.physics.arcade.collide(player, chairCollider2);
-  game.physics.arcade.collide(player, chairCollider3);
-  game.physics.arcade.collide(player, chairCollider4);
-  game.physics.arcade.collide(player, chairCollider5);
-  game.physics.arcade.collide(player, chairCollider6);
-  game.physics.arcade.collide(player, chairCollider7);
-  game.physics.arcade.collide(player, chairCollider8);
+  game.physics.arcade.collide(layer, layerCollider);
   game.physics.arcade.collide(player, TtableCollider);
   game.physics.arcade.collide(player, TtableCollider2);
 
@@ -321,8 +266,6 @@ function collisionHandler(player,classroomdoor)
   game.state.add('stage2',stage2)
   game.state.start('stage2')
 }
-
-
 
 var map
 function preloadstage() {
@@ -401,9 +344,9 @@ function createstage()
 
   //  Game input
   cursors = game.input.keyboard.createCursorKeys();
-  game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
   spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
 
+  // this.upkey = this.game.input.keyboard.addKey(Phaser.Keyboard.W)
   //player.animations.add('left', [0, 1, 2, 3], 10, true);
   //player.animations.add('right', [5, 6, 7, 8], 10, true);
   game.camera.follow(player);
