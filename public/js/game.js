@@ -16,7 +16,6 @@ var teacher2 = { preload: preloadteacher2, create: createteacher2, update: updat
 game.state.add('teacher2', teacher2)
 //game.state.start('')
 
-
 function preloadtMenu()
 {
 
@@ -71,12 +70,12 @@ function actionOnClickStart ()
 function preloadHT()
 {
   game.load.image('HowToPlayScene', 'assets/howto/howtoto.png')
-  game.load.image('Back', 'assets/howto/back.png')
+  game.load.spritesheet('Back', 'assets/howto/back1.png',144,279/3,3)
   game.load.spritesheet('junja','assets/junja.png',90/3,127/4,12);
 }
 
 var spacbar
-
+var onBack = false
 function createHT()
 {
  background = game.add.tileSprite(0, 0, 1000, 600, 'HowToPlayScene');
@@ -85,6 +84,9 @@ function createHT()
  back = game.add.sprite (50, 450,'Back');
  game.physics.enable(back, Phaser.Physics.ARCADE);
  back.enableBody = true;
+ back.animations.add('backButton',[0,1])
+ back.animations.add('pushBack',[1]);
+ back.animations.add('pullBack',[0]);
  
 
  player = game.add.sprite(game.world.centerX - 120, 50, 'junja');
@@ -102,11 +104,17 @@ function createHT()
  spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
 
 }
+var spacebarCooldown = 0;
 
 function updateHT()
 {
   player.body.velocity.y = 0;
   player.body.velocity.x = 0;
+
+  if(onBack)
+  {
+    back.animations.play('pullBack', true)
+  }
 
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
@@ -128,16 +136,24 @@ function updateHT()
   {
       player.animations.stop();
   }
-
+  
+ 
   game.physics.arcade.overlap(player, back, onBackButton, null, this);
 
   function onBackButton(player,back)
   {
-    console.log('overlap')
-    if (spacbar.isDown && spacebarCooldown<=game.time.now){
-      game.state.start('menu')
-
+    onBack = true
+    if(onBack)
+    {
+      back.animations.play('pushBack', true);
+      return
+        if (spacbar.isDown && spacebarCooldown<=game.time.now)
+      {
+        game.state.start('menu')
+      }
     }
+
+    
   }
 }
 
