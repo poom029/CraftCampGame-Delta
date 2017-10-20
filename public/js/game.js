@@ -12,8 +12,166 @@ var stage2 = { preload: preloadstage, create: createstage, update: updatestage }
 game.state.add('stage2', stage2)
 var teacher2 = { preload: preloadteacher2, create: createteacher2, update: updateteacher2 }
 game.state.add('teacher2', teacher2)
+var girltoiletfull = { preload: preloadgirltoiletfull, create: creategirltoiletfull, update: updategirltoiletfull }
+game.state.add('girltoiletfull', girltoiletfull)
+var stage3 = { preload: preloadstage3, create: createstage3, update: updatestage3 }
+game.state.add('stage3', stage3)
+var musicfloor = { preload: preloadmusicfloor, create: createmusicfloor, update: updatemusicfloor }
+game.state.add('musicfloor', musicfloor)
+
+
 //game.state.start('')
 
+
+function preloadstage3() {
+  game.load.image('collidor', 'assets/F2/collidor/collidor.png');
+  game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
+  game.load.spritesheet('collidor11', 'assets/F2/collidor/collidor11.png');
+  game.load.spritesheet('collidor12', 'assets/F2/collidor/collidor12.png');
+  game.load.spritesheet('collidor13', 'assets/F2/collidor/collidor13.png');
+  game.load.spritesheet('collidor14', 'assets/F2/collidor/collidor14.png');
+}
+function createstage3()
+{
+  game.add.tileSprite(0, 0, 1712, 1301, 'collidor');
+  game.world.setBounds(0, 0, 1712, 1301);
+
+  player = game.add.sprite(130, 160, 'junja');
+  player.scale.setTo(2,2);
+  var PstartR = player.animations.add('faceToR',[7]);
+  player.animations.play('faceToR', true)
+  game.physics.enable(player, Phaser.Physics.ARCADE);
+  player.body.collideWorldBounds = true;
+
+  doorToCR = game.add.sprite(55,790);
+  game.physics.enable(doorToCR, Phaser.Physics.ARCADE);
+  doorToCR.body.immovable = true;
+
+  doorToCR = game.add.sprite(55,790);
+  game.physics.enable(doorToCR, Phaser.Physics.ARCADE);
+  doorToCR.body.immovable = true;
+
+  musicRoomDoor = game.add.sprite (200, 70, 'box')
+  musicRoomDoor.visible = true;
+  game.physics.enable(musicRoomDoor, Phaser.Physics.ARCADE);
+
+  collidor11 = game.add.sprite(315,-710, 'collidor11');
+  collidor11.visible = false
+  collidor12 = game.add.sprite(-10, 10, 'collidor12');
+  collidor12.visible = false
+  collidor13 = game.add.sprite(225, -30, 'collidor13');
+  collidor13.visible = false
+  collidor14 = game.add.sprite(100, 0, 'collidor14');
+  collidor14.visible = false
+
+  game.physics.enable(collidor11, Phaser.Physics.ARCADE);
+  collidor11.body.immovable = true;
+  game.physics.enable(collidor12, Phaser.Physics.ARCADE);
+  collidor12.body.checkCollision.up = false;
+  collidor12.body.checkCollision.down = true;
+  collidor12.body.immovable = true;
+  game.physics.enable(collidor13, Phaser.Physics.ARCADE);
+  collidor13.body.checkCollision.up = false;
+  collidor13.body.checkCollision.down = true;
+  collidor13.body.immovable = true;
+  game.physics.enable(collidor14, Phaser.Physics.ARCADE);
+  collidor14.body.checkCollision.up = false;
+  collidor14.body.checkCollision.down = true;
+  collidor14.body.immovable = true;
+  toTroom = game.add.sprite(55,580);
+  toTroom.visible = true;
+  game.physics.enable(toTroom, Phaser.Physics.ARCADE);
+  toTroom.body.immovable = true;
+  
+
+  var walku = player.animations.add('walku', [9, 10, 11])
+  var walkl = player.animations.add('walkl', [3, 4, 5]);
+  var walkr = player.animations.add('walkr', [6, 7, 8]);
+  var walkd = player.animations.add('walkd', [0, 1, 2]);
+
+  game.camera.follow(player);
+
+}
+function updatestage3()
+{
+  
+  game.physics.arcade.collide(player, collidor11);
+  game.physics.arcade.collide(player, collidor12);
+  game.physics.arcade.collide(player, collidor13);
+  game.physics.arcade.collide(player, collidor14);
+  game.physics.arcade.overlap(player, musicRoomDoor, toMusicroom, null, this);
+  
+  player.body.velocity.y = 0;
+  player.body.velocity.x = 0;
+  if (cursors.up.isDown) {
+    player.body.velocity.y = -300;
+    player.animations.play('walku', 5, true);
+  }
+
+  else if (cursors.left.isDown) {
+    player.body.velocity.x = -300;
+    player.animations.play('walkl', 5, true)
+  }
+  else if (cursors.right.isDown) {
+    player.body.velocity.x = 300;
+    player.animations.play('walkr', 5, true)
+  }
+  else if (cursors.down.isDown) {
+    player.body.velocity.y = 300;
+    player.animations.play('walkd', 5, true)
+  }
+  else {
+    player.animations.stop();
+  }
+}
+
+function preloadmusicfloor()
+{
+  game.load.image('musicroom', 'assets/F3/musicroom/musicfloor.png');
+  game.load.spritesheet('junja','assets/junja.png',90/3,127/4,12);
+}
+
+
+function createmusicfloor()
+{
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.add.tileSprite(0,0, 1025, 675, 'musicroom');
+  game.world.setBounds(0, 0, 1025, 675);
+  player = game.add.sprite(450, 590, 'junja');
+  game.physics.enable(player, Phaser.Physics.ARCADE);
+  player.scale.setTo(2, 2); 
+
+  var walku = player.animations.add('walku', [9, 10, 11]) 
+  var walkl = player.animations.add('walkl', [3, 4, 5]); 
+  var walkr = player.animations.add('walkr', [6, 7, 8]); 
+  var walkd = player.animations.add('walkd', [0, 1, 2]);
+
+}
+function updatemusicfloor()
+{
+  player.body.collideWorldBounds = true;
+  player.body.velocity.y = 0;
+  player.body.velocity.x = 0;
+  if (cursors.up.isDown) {
+    player.body.velocity.y = -300;
+    player.animations.play('walku', 5, true);}
+    else if (cursors.left.isDown) {
+      player.body.velocity.x = -300;
+      player.animations.play('walkl', 5, true)
+    }
+    else if (cursors.right.isDown) {
+      player.body.velocity.x = 300;
+      player.animations.play('walkr', 5, true)
+    }
+    else if (cursors.down.isDown) {
+      player.body.velocity.y = 300;
+      player.animations.play('walkd', 5, true)
+    }
+    else {
+      player.animations.stop();
+    }
+    game.camera.follow(player);
+}
 
 function preloadtMenu()
 {
@@ -64,6 +222,7 @@ function actionOnClickHowT ()
 function actionOnClickStart ()
 {
   game.state.start('classroom_1')
+  // game.state.start('girltoiletfull')
 
 }
             //||||||||||HOW TO PLAY||||||||
@@ -347,6 +506,7 @@ var sprite;
 var cursors;
 var player
 var fromStage2 = false;
+var tof3;
 
 function createstage() {
 
@@ -397,6 +557,10 @@ function createstage() {
   toTroom.visible = true;
   game.physics.enable(toTroom, Phaser.Physics.ARCADE);
   toTroom.body.immovable = true;
+  tof3 = game.add.sprite (200, 70, 'box')
+  tof3.visible = false;
+  game.physics.enable(tof3, Phaser.Physics.ARCADE);
+  
 
   var walku = player.animations.add('walku', [9, 10, 11])
   var walkl = player.animations.add('walkl', [3, 4, 5]);
@@ -441,6 +605,7 @@ function updatestage() {
   
   game.physics.arcade.overlap(player, toTroom, toTeacherRoom, null, this);
   game.physics.arcade.overlap(player, doorToCR, TOclassroom, null, this);
+  game.physics.arcade.overlap(player, tof3, toFloor3, null, this);
 
   player.body.velocity.y = 0;
   player.body.velocity.x = 0;
@@ -550,8 +715,64 @@ function updateteacher2() {
 
 }
 
+
+
+  function preloadgirltoiletfull(){
+    game.load.image('girltoiletfull', 'assets/F3/teacherroom/girltoiletfull.png');
+    game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
+  }
+function creategirltoiletfull()
+  {
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.add.tileSprite(0,25, 967, 453, 'teacherfloor');
+  game.world.setBounds(0, 0, 967, 453);
+  player = game.add.sprite(450, 590, 'junja');
+  game.physics.enable(player, Phaser.Physics.ARCADE);
+  player.scale.setTo(2, 2); 
+
+  var walku = player.animations.add('walku', [9, 10, 11]) 
+  var walkl = player.animations.add('walkl', [3, 4, 5]); 
+  var walkr = player.animations.add('walkr', [6, 7, 8]); 
+  var walkd = player.animations.add('walkd', [0, 1, 2]); 
+  }
+
+  function updategirltoiletfull() {
+    player.body.collideWorldBounds = true;
+  
+    player.body.velocity.y = 0;
+    player.body.velocity.x = 0;
+    if (cursors.up.isDown) {
+      player.body.velocity.y = -300;
+      player.animations.play('walku', 5, true);}
+      else if (cursors.left.isDown) {
+        player.body.velocity.x = -300;
+        player.animations.play('walkl', 5, true)
+      }
+      else if (cursors.right.isDown) {
+        player.body.velocity.x = 300;
+        player.animations.play('walkr', 5, true)
+      }
+      else if (cursors.down.isDown) {
+        player.body.velocity.y = 300;
+        player.animations.play('walkd', 5, true)
+      }
+      else {
+        player.animations.stop();
+      }
+  
+  }
+
+
 function TOclassroom()
 {
   game.state.start('classroom_1')
   // game.state.start('classroom_1_out')
+}
+function toFloor3()
+{
+  game.state.start('stage3')
+}
+function toMusicroom()
+{
+  game.state.start('musicfloor')
 }
