@@ -23,10 +23,10 @@ function preloadtMenu()
   game.load.image('MenuButtonHelp', 'assets/menu/help.png');
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
   game.load.image('MenuBGSetting', 'assets/menu/BGSetting.png');
-
+  game.load.audio('menubgm','assets/music/menubgm.mp3');
 
 }
-
+var menubgmusic
 function createtMenu()
 {
   background = game.add.tileSprite(0, 0, 1000, 600, 'MenuBackground');
@@ -39,7 +39,8 @@ function createtMenu()
 
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
-
+      game.
+      menubgmusic = game.sound.play('menubgm')
 //     var bar = game.add.graphics();
 //     bar.beginFill(0x000000, 0.2);
 //     bar.drawRect(0, 400, 1000, 100);
