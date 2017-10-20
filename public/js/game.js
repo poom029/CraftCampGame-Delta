@@ -285,8 +285,11 @@ function createRoom_1()
   TtableCollider2.body.immovable = true;
   layerBG.add(TtableCollider2);
 
-  
-  player = game.add.sprite(400, 200, 'junja');
+  if(fromStage2){
+    player = game.add.sprite(900, 120, 'junja');
+  }else{
+    player = game.add.sprite(400, 200, 'junja');
+  }
   game.physics.enable(player, Phaser.Physics.ARCADE);
   player.scale.setTo(2.5,2.5);
   player.body.collideWorldBounds = true;
@@ -358,10 +361,27 @@ function updateRoom_1()
   }
 
 }
+
 function collisionHandler(player,classroomdoor)
 {
   game.state.start('stage2')
 }
+
+
+var sprite;
+var cursors;
+var player
+var walltop
+var wallL
+var classroomfull
+var chairT
+var chairB
+var chairCollider
+var TtableT
+var TtableB
+var TtableCollider
+
+
 
 var map
 function preloadstage() 
@@ -377,9 +397,11 @@ function preloadstage()
 var sprite;
 var cursors;
 var player
+var fromStage2 = false;
 
 function createstage() {
 
+  fromStage2 = true;
   game.stage.disableVisibilityChange = true;
 
   //  A spacey background
@@ -390,6 +412,10 @@ function createstage() {
   player.scale.setTo(2,2);
   var PstartR = player.animations.add('faceToR',[7]);
   player.animations.play('faceToR', true)
+
+  doorToCR = game.add.sprite(55,790);
+  game.physics.enable(doorToCR, Phaser.Physics.ARCADE);
+  doorToCR.body.immovable = true;
 
   doorToCR = game.add.sprite(55,790);
   game.physics.enable(doorToCR, Phaser.Physics.ARCADE);
@@ -418,6 +444,10 @@ function createstage() {
   collidor14.body.checkCollision.up = false;
   collidor14.body.checkCollision.down = true;
   collidor14.body.immovable = true;
+  toTroom = game.add.sprite(55,580);
+  toTroom.visible = true;
+  game.physics.enable(toTroom, Phaser.Physics.ARCADE);
+  toTroom.body.immovable = true;
 
   stairD = game.add.sprite(210,165);
   game.physics.enable(stairD, Phaser.Physics.ARCADE);
@@ -463,7 +493,8 @@ function updatestage() {
   game.physics.arcade.collide(player, collidor12);
   game.physics.arcade.collide(player, collidor13);
   game.physics.arcade.collide(player, collidor14);
-
+  
+  game.physics.arcade.overlap(player, toTroom, toTeacherRoom, null, this);
   game.physics.arcade.overlap(player, doorToCR, TOclassroom, null, this);
   game.physics.arcade.overlap(player, stairD, TO1fPATH, null, this);
   
@@ -489,6 +520,11 @@ function updatestage() {
   else {
     player.animations.stop();
   }
+
+  function toTeacherRoom(player,toTroom)
+  {
+    game.state.start('teacher2')
+  }
 }
 
 // if (spacbar.isDown && spacebarCooldown<=game.time.now)
@@ -499,25 +535,54 @@ function updatestage() {
 
 
 function preloadteacher2() {
-  game.load.image('teacherfloor', 'assets/F3/teacherroom/teacherfloor.png');
+  game.load.image('teacherfloor', 'assets/F3/teacherroom/teacherfloor1.png');
   game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
+  game.load.image('teacherfloortop', 'assets/F3/teacherroom/teacherfloortop.png');
+  game.load.image('teacherfloorL', 'assets/F3/teacherroom/teacherfloorL.png');
+  game.load.image('teacherfloorR', 'assets/F3/teacherroom/teacherfloorR.png');
+  game.load.image('teacherfloorR2', 'assets/F3/teacherroom/teacherfloorR2.png');
+  game.load.image('table', 'assets/F3/teacherroom/table.png');
 }
 function createteacher2() {
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  game.add.tileSprite(0, 50, 1027, 478, 'teacherfloor');
-  game.world.setBounds(0, 0, 1027, 478);
-  player = game.add.sprite(85, 790, 'junja');
+  game.add.tileSprite(0,25, 967, 453, 'teacherfloor');
+  game.world.setBounds(0, 0, 967, 453);
+  player = game.add.sprite(450, 590, 'junja');
   game.physics.enable(player, Phaser.Physics.ARCADE);
   player.scale.setTo(2, 2); 
+  game.physics.enable(player, Phaser.Physics.ARCADE); 
+  teacherfloortop = game.add.sprite(0, 30, 'teacherfloortop');
+  teacherfloortop.visible = false
+  game.physics.enable(teacherfloortop, Phaser.Physics.ARCADE); 
+  teacherfloortop.body.immovable = true;
+  teacherfloorL = game.add.sprite(0, 50, 'teacherfloorL');
+  teacherfloorL.visible = false
+  game.physics.enable(teacherfloorL, Phaser.Physics.ARCADE); 
+  teacherfloorL.body.immovable = true;
+  teacherfloorR = game.add.sprite(915, 45, 'teacherfloorR');
+  teacherfloorR.visible = false
+  game.physics.enable(teacherfloorR, Phaser.Physics.ARCADE); 
+  teacherfloorR.body.immovable = true;
+  teacherfloorR2 = game.add.sprite(915, 300, 'teacherfloorR2');
+  teacherfloorR2.visible = false
+  game.physics.enable(teacherfloorR2, Phaser.Physics.ARCADE); 
+  teacherfloorR2.body.immovable = true;
+
   var walku = player.animations.add('walku', [9, 10, 11]) 
   var walkl = player.animations.add('walkl', [3, 4, 5]); 
   var walkr = player.animations.add('walkr', [6, 7, 8]); 
   var walkd = player.animations.add('walkd', [0, 1, 2]); 
+
 }
 
 function updateteacher2() {
   player.body.collideWorldBounds = true;
+  game.physics.arcade.collide(player, teacherfloortop);
+  game.physics.arcade.collide(player, teacherfloorL);
+  game.physics.arcade.collide(player, teacherfloorR);
+  game.physics.arcade.collide(player, teacherfloorR2);
+
   player.body.velocity.y = 0;
   player.body.velocity.x = 0;
   if (cursors.up.isDown) {
@@ -557,6 +622,9 @@ function preloadPathtoSCroom()
 {
   game.load.image('path', 'assets/outdoor/path.png')
   game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
+{
+  game.state.start('classroom_1')
+  // game.state.start('classroom_1_out')
 }
 
 function createPathtoSCroom()
