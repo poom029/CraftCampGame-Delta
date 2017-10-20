@@ -4,11 +4,12 @@ var game = new Phaser.Game(1000, 600, Phaser.CANVAS, 'Once')
 var menu = { preload: preloadtMenu, create: createtMenu }
 game.state.add('menu',menu)
 game.state.start('menu')
+var howtoplay = { preload: preloadHT, create: createHT, update: updateHT }
+game.state.add('howtoplay', howtoplay)
 var stage1 = { preload: preloadRoom_1, create: createRoom_1, update: updateRoom_1 }
 game.state.add('classroom_1',stage1)
 var stage2 = { preload: preloadstage, create: createstage, update: updatestage }
 game.state.add('stage2',stage2)
-// game.state.start('stage2')
 
 
 function preloadtMenu()
@@ -16,9 +17,12 @@ function preloadtMenu()
 
   game.load.image('MenuBackground', 'assets/menu/BGnew2.png');
   game.load.spritesheet('MenuButtonStart', 'assets/menu/startspite.png',393,390/3,3);
+  game.load.spritesheet('HowTBT', 'assets/menu/howto.png',391,399/3,3);
+  game.load.image('MenuBackground', 'assets/menu/BGnew2.png');
   game.load.image('MenuButtonHelp', 'assets/menu/help.png');
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
   game.load.image('MenuBGSetting', 'assets/menu/BGSetting.png');
+
 
 }
 
@@ -27,7 +31,11 @@ function createtMenu()
   background = game.add.tileSprite(0, 0, 1000, 700, 'MenuBackground');
   
       button1 = game.add.button(game.world.centerX - 120, 250, 'MenuButtonStart', actionOnClickStart, this, 1, 0, 2);
+      button1 = game.add.button(game.world.centerX - 200, 250, 'MenuButtonStart', actionOnClickStart, this, 1, 0, 2);
       button1.scale.setTo(1, 0.9 );
+
+      HTbutton = game.add.button(game.world.centerX - 100, 400, 'HowTBT', actionOnClickHowT, this, 1, 0, 2)
+      HTbutton.scale.setTo(0.5, 0.4);
 
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
@@ -35,47 +43,47 @@ function createtMenu()
     var bar = game.add.graphics();
     bar.beginFill(0x000000, 0.2);
     bar.drawRect(0, 400, 1000, 100);
+//     var bar = game.add.graphics();
+//     bar.beginFill(0x000000, 0.2);
+//     bar.drawRect(0, 400, 1000, 100);
 
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+//     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
 
     var dialogCounter = 0;
     var dialogMMenu = ['สวัสดี','ยินดีต้อนรับ','จบ']
+//     var dialogCounter = 0;
+//     var dialogMMenu = ['สวัสดี','ยินดีต้อนรับ','จบ']
     // text = game.add.text(0, 0, dia[dialogCounter++], style);
     // text.setText(dia[dialogCounter++])
     // text.setText(dia[dialogCounter++])
     // text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
     // text.setTextBounds(game.world.centerX, 450);
+}
 
-
-
-  
- }
-  
-  
+function actionOnClickHowT ()
+{
+  game.state.start('howtoplay')
+}
 function actionOnClickStart ()
 {
   game.state.start('classroom_1')
 }
-
-var scene = { preload: preloadScene , create: createScene , update: updateScene }
-function preloadScene()
+            //||||||||||HOW TO PLAY||||||||
+function preloadHT()
 {
-  game.load.image('waikruScene', 'assets')
+  game.load.image('HowToPlayScene', 'assets/howto/howtonew.png')
 }
 
-function createScene()
+function createHT()
 {
- background = game.add.tileSprite(0, 0, 800, 600, 'waikruScene');
+ background = game.add.tileSprite(0, 0, 1000, 700, 'HowToPlayScene');
 }
 
-function updateScene()
+function updateHT()
 {
 
 }
-
-
-
-var map
 function preloadRoom_1() 
 {
   game.load.image('classroom', 'assets/F2/classroom/startclassfull.png');
