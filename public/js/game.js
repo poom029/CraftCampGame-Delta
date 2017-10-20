@@ -17,7 +17,7 @@ game.state.add('pathSC',PTscRoom)
 var scRoom = { preload: preloadSCroom, create: createSCroom, update: updateSCroom }
 game.state.add('SC',scRoom)
 
-game.state.start('SC')
+game.state.start('menu')
 
 function preloadtMenu()
 {
@@ -216,7 +216,10 @@ function createRoom_1()
   layerCollider.enableBody = true;
   layerCollider.physicsBodyType = Phaser.Physics.ARCADE;
  
-
+  fromClassroom = true;
+  fromSCroom = false
+  fromPTsecret = false;
+  fromStage2 = false;
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -408,20 +411,41 @@ var sprite;
 var cursors;
 var player
 var fromStage2 = false;
+var fromClassroom = false;
 
 function createstage() {
 
-  fromStage2 = true;
   game.stage.disableVisibilityChange = true;
+  fromStage2 = true;
+  fromClassroom = false;
+  fromSCroom = false
+  fromPTsecret = false;
 
   //  A spacey background
+
   game.add.tileSprite(0, 0, 1712, 1301, 'collidor');
   game.world.setBounds(0, 0, 1712, 1301);
 
-  player = game.add.sprite(90, 790, 'junja');
-  player.scale.setTo(2,2);
-  var PstartR = player.animations.add('faceToR',[7]);
-  player.animations.play('faceToR', true)
+  if(fromSCroom)
+  {
+    player = game.add.sprite(250, 165, 'junja');
+    var PstartD = player.animations.add('faceToR',[7]);
+    player.animations.play('faceToR', true)
+    
+  }
+  else if(fromClassroom)
+  {
+    player = game.add.sprite(65,790, 'junja'); 
+    var PstartL = player.animations.add('faceToD',[1]);
+    player.animations.play('faceToD', true)
+  }else
+  {
+    {
+      player = game.add.sprite(160, 50, 'junja'); 
+      var PstartL = player.animations.add('faceToD',[1]);
+      player.animations.play('faceToD', true)
+    }
+  }
 
   doorToCR = game.add.sprite(55,790);
   game.physics.enable(doorToCR, Phaser.Physics.ARCADE);
@@ -459,7 +483,7 @@ function createstage() {
   game.physics.enable(toTroom, Phaser.Physics.ARCADE);
   toTroom.body.immovable = true;
 
-  stairD = game.add.sprite(210,165);
+  stairD = game.add.sprite(250,165);
   game.physics.enable(stairD, Phaser.Physics.ARCADE);
   stairD.body.immovable = true;
 
@@ -475,11 +499,6 @@ function createstage() {
 
   //  We need arcade physics
   game.physics.startSystem(Phaser.Physics.ARCADE);
-
-  //  Our ships bullets
-  bullets = game.add.group();
-  bullets.enableBody = true;
-  bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
   //  and its physics settings
   game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -497,7 +516,8 @@ function createstage() {
 }
 
 var spacebarCooldown = 0;
-function updatestage() {
+function updatestage() 
+{
   player.body.collideWorldBounds = true;
   game.physics.arcade.collide(player, collidor11);
   game.physics.arcade.collide(player, collidor12);
@@ -627,31 +647,60 @@ function TO1fPATH()
     game.state.start('pathSC')
   }
 
+
 function preloadPtoSCroom()
 {
   game.load.image('path', 'assets/outdoor/path.png')
   game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
 }
+var fromPTsecret = false;
 
 function createPtoSCroom()
 {
+  fromPTsecret = true;
+  fromStage2 = false;
+  fromClassroom = false;
+  fromSCroom = false
   game.add.tileSprite(0, 50, 4136, 1000, 'path');
   game.world.setBounds(0, 0, 4136, 1000);
 
-  player = game.add.sprite(150, 50, 'junja');
-  game.physics.enable(player, Phaser.Physics.ARCADE);
-  player.scale.setTo(3, 3); 
+  if(fromSCroom)
+  {
+    player = game.add.sprite(100, 895, 'junja');
+    var PstartD = player.animations.add('faceToR',[7]);
+    player.animations.play('faceToR', true)
+    
+  }
+  else
+  {
+    player = game.add.sprite(160, 50, 'junja'); 
+    var PstartL = player.animations.add('faceToD',[1]);
+    player.animations.play('faceToD', true)
+  }
+
+  toSecret = game.add.sprite(-30,880);
+  game.physics.enable(toSecret, Phaser.Physics.ARCADE); 
+
+  goupSTAIR = game.add.sprite(230,0);
+  game.physics.enable(goupSTAIR, Phaser.Physics.ARCADE);
 
   var walku = player.animations.add('walku', [9, 10, 11])
   var walkl = player.animations.add('walkl', [3, 4, 5]);
   var walkr = player.animations.add('walkr', [6, 7, 8]);
   var walkd = player.animations.add('walkd', [0, 1, 2]);
+  
+  game.physics.enable(player, Phaser.Physics.ARCADE);
+  player.scale.setTo(3, 3); 
 
   game.camera.follow(player);
 }
 
 function updatePtoSCroom()
 {
+
+  game.physics.arcade.overlap(player, toSecret, overLapToSC, null, this);
+  game.physics.arcade.overlap(player, goupSTAIR, overLapTo2F, null, this);
+
   player.body.velocity.y = 0;
   player.body.velocity.x = 0;
   if (cursors.up.isDown) 
@@ -679,19 +728,33 @@ function updatePtoSCroom()
     player.animations.stop();
   }
 }
+function overLapToSC()
+{
+  game.state.start('SC')
+}
+function overLapTo2F()
+{
+  game.state.start('stage2')
+}
 
 function preloadSCroom()
 {
   game.load.image('flower', 'assets/outdoor/secretroom/flower.png')
   game.load.image('fwRoomWallT', 'assets/outdoor/secretroom/flowerfloor.png')
   game.load.image('fwRoom', 'assets/outdoor/secretroom/flowerfloorFULL.png')
-  game.load.image('light', 'assets/doormark.png')
+  game.load.image('light', 'assets/doormark2.png')
   game.load.spritesheet('junja', 'assets/junja.png', 90 / 3, 127 / 4, 12);
 
 }
 
+var fromSCroom = false
 function createSCroom()
 {
+  fromSCroom = true
+  fromPTsecret = false;
+  fromStage2 = false;
+  fromClassroom = false;
+  
   spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -707,7 +770,7 @@ function createSCroom()
   game.physics.enable(flower, Phaser.Physics.ARCADE);
   flower.body.immovable = true;
 
-  light = game.add.sprite(game.world.centerX ,520,'light')
+  light = game.add.sprite(game.world.centerX - 110 ,520,'light')
   light.scale.setTo(3,3);
   game.physics.enable(light, Phaser.Physics.ARCADE);
   light.body.immovable = true;
@@ -748,11 +811,13 @@ function updateSCroom()
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5, true)
   }
-  else {
+  else 
+  {
     player.animations.stop();
   }
   game.physics.arcade.collide(player, SCwalltop);
   game.physics.arcade.overlap(player, flower, collectFlower, null, this);
+  game.physics.arcade.overlap(player, light, topath, null, this);
 
   function collectFlower()
   {
@@ -764,4 +829,8 @@ function updateSCroom()
     }
   }
 
+  function topath()
+  {
+    game.state.start('pathSC')
+  }
 }
