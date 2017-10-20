@@ -26,6 +26,12 @@ function preloadtMenu()
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
   game.load.image('MenuBGSetting', 'assets/menu/BGSetting.png');
   game.load.audio('menubgm','assets/music/menubgm.mp3');
+  game.load.audio('starts','assets/music/b3.mp3')
+  game.load.audio('howtos','assets/music/b2.mp3')
+  game.load.audio('bgmg','assets/music/bgm all1.30.mp3')
+  game.load.audio('fs','assets/music/fs.mp3')
+  game.load.audio('endcbgm','assets/music/Endcredit.mp3')
+  game.load.audio('odoor','assets/music/odoor.mp3')
 
 }
 var menubgmusic
@@ -41,7 +47,14 @@ function createtMenu()
 
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
-      menubgmusic = game.sound.play('menubgm')
+      menubgm = game.add.audio('menubgm')
+      menubgm.loopFull(0.9)
+      starts = game.add.audio('starts')
+      howtos = game.add.audio('howtos')
+      bgmg = game.add.audio('bgmg')
+      fs = game.add.audio('fs')
+      endcbgm = game.add.audio('endcbgm')
+      odoor = game.add.audio('odoor')
 //     var bar = game.add.graphics();
 //     bar.beginFill(0x000000, 0.2);
 //     bar.drawRect(0, 400, 1000, 100);
@@ -64,6 +77,7 @@ function actionOnClickHowT ()
 function actionOnClickStart ()
 {
   game.state.start('classroom_1')
+  bgmg.loopFull(0.6)
 
 }
             //||||||||||HOW TO PLAY||||||||
@@ -344,6 +358,7 @@ function updateRoom_1()
 }
 function collisionHandler(player,classroomdoor)
 {
+  odoor.play()
   game.state.add('stage2',stage2)
   game.state.start('stage2')
 }
@@ -690,10 +705,28 @@ function updateteacher2() {
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
     player.animations.play('walku', 5, true);
+    if(!fs.isPlaying){fs.play()}
   }
-
+ else if (cursors.left.isDown) {
+    player.body.velocity.x = -300;
+    player.animations.play('walkl', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else if (cursors.right.isDown) {
+    player.body.velocity.x = 300;
+    player.animations.play('walkr', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else if (cursors.down.isDown) {
+    player.body.velocity.y = 300;
+    player.animations.play('walkd', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else {
+    player.animations.stop();
+  }
+}
 function TOclassroom()
   {
     game.state.start('classroom_1_out')
   }
-}
