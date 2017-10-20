@@ -440,6 +440,12 @@ function createteacher2() {
   game.world.setBounds(0, 0, 1027, 478);
   player = game.add.sprite(85, 790, 'junja');
   game.physics.enable(player, Phaser.Physics.ARCADE);
+  player.scale.setTo(2, 2); 
+  game.physics.enable(player, Phaser.Physics.ARCADE); 
+  var walku = player.animations.add('walku', [9, 10, 11]) 
+  var walkl = player.animations.add('walkl', [3, 4, 5]); 
+  var walkr = player.animations.add('walkr', [6, 7, 8]); 
+  var walkd = player.animations.add('walkd', [0, 1, 2]); 
 }
 
 function updateteacher2() {
