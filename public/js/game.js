@@ -27,9 +27,17 @@ function preloadtMenu()
   game.load.image('MenuButtonSetting', 'assets/menu/setting.png');
   game.load.image('MenuBGSetting', 'assets/menu/BGSetting.png');
   game.load.audio('menubgm','assets/music/menubgm.mp3');
+  game.load.audio('starts','assets/music/b3.mp3')
+  game.load.audio('howtos','assets/music/b2.mp3')
+  game.load.audio('bgmg','assets/music/bgm all1.30.mp3')
+  game.load.audio('fs','assets/music/fs.mp3')
 
 }
 var menubgmusic
+var starts
+var howtos
+var bgmg
+var fs
 function createtMenu()
 {
   background = game.add.tileSprite(0, 0, 1000, 600, 'MenuBackground');
@@ -42,8 +50,12 @@ function createtMenu()
 
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
-      game.
-      menubgmusic = game.sound.play('menubgm')
+      menubgm = game.add.audio('menubgm')
+      menubgm.loopFull(0.9)
+      starts = game.add.audio('starts')
+      howtos = game.add.audio('howtos')
+      bgmg = game.add.audio('bgmg')
+      fs = game.add.audio('fs')
 //     var bar = game.add.graphics();
 //     bar.beginFill(0x000000, 0.2);
 //     bar.drawRect(0, 400, 1000, 100);
@@ -61,11 +73,15 @@ function createtMenu()
 
 function actionOnClickHowT ()
 {
+  menubgm.stop()
+  howtos.play()
   game.state.start('howtoplay')
 }
 function actionOnClickStart ()
-{
+{ menubgm.stop()
+  starts.play()
   game.state.start('classroom_1')
+  //bgmg.loopFull(0.6)
 
 }
             //||||||||||HOW TO PLAY||||||||
@@ -102,20 +118,28 @@ function updateHT()
   player.body.velocity.x = 0;
 
   if (cursors.up.isDown) {
+    fs.play()
     player.body.velocity.y = -300;
     player.animations.play('walku', 5 , true);
+    
   }
   else if (cursors.left.isDown) {
+    fs.play()
     player.body.velocity.x= -300;
     player.animations.play('walkl', 5 , true)
+    
   }
   else if (cursors.right.isDown) {
+    fs.play()
     player.body.velocity.x = 300;
     player.animations.play('walkr', 5 , true)
+    
   }
   else if (cursors.down.isDown) {
+    fs.play()
     player.body.velocity.y = 300;
     player.animations.play('walkd', 5 , true)
+    
   }
   else
   {
@@ -600,7 +624,7 @@ function updatestage() {
   game.physics.arcade.collide(player, collidor14);
 
   game.physics.arcade.overlap(player, doorToCR, TOclassroom, null, this);
-
+ var TOclassroom
   player.body.velocity.y = 0;
   player.body.velocity.x = 0;
   if (cursors.up.isDown) {
