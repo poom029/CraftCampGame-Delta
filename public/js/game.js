@@ -39,7 +39,6 @@ function createtMenu()
 
       setting = game.add.image(900,520,'MenuButtonSetting');
       setting.scale.setTo = (0.01, 0.02);
-      game.
       menubgmusic = game.sound.play('menubgm')
 //     var bar = game.add.graphics();
 //     bar.beginFill(0x000000, 0.2);
@@ -72,12 +71,17 @@ function preloadHT()
   game.load.spritesheet('junja','assets/junja.png',90/3,127/4,12);
 }
 
+var spacbar
+
 function createHT()
 {
  background = game.add.tileSprite(0, 0, 1000, 600, 'HowToPlayScene');
  game.world.setBounds(0, 0, 1000, 600);
 
- back = game.add.image (50, 450,'Back');
+ back = game.add.sprite (50, 450,'Back');
+ game.physics.enable(back, Phaser.Physics.ARCADE);
+ back.enableBody = true;
+ 
 
  player = game.add.sprite(game.world.centerX - 120, 50, 'junja');
  game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -90,6 +94,9 @@ function createHT()
  var walkl = player.animations.add( 'walkl' , [3,4,5]);
  var walkr = player.animations.add( 'walkr' , [6,7,8]);
  var walkd = player.animations.add( 'walkd' , [0,1,2]);
+
+ spacbar = game.input.keyboard.addKey([Phaser.Keyboard.SPACEBAR]);
+
 }
 
 function updateHT()
@@ -116,6 +123,17 @@ function updateHT()
   else
   {
       player.animations.stop();
+  }
+
+  game.physics.arcade.overlap(player, back, onBackButton, null, this);
+
+  function onBackButton(player,back)
+  {
+    console.log('overlap')
+    if (spacbar.isDown && spacebarCooldown<=game.time.now){
+      game.state.start('menu')
+
+    }
   }
 }
 
