@@ -84,7 +84,7 @@ function actionOnClickStart ()
 { menubgm.stop()
   starts.play()
   game.state.start('classroom_1')
-  //bgmg.loopFull(0.6)
+  bgmg.loopFull(0.6)
 
 }
             //||||||||||HOW TO PLAY||||||||
