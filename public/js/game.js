@@ -140,6 +140,14 @@ function createRoom_1()
   chairT = game.add.sprite(700 ,550 , 'Chair1');
   layerT.add(chairT);
 
+  // function createChairB()
+  // {
+  //   for(var chairB_x = 0; chairB_x < 3; chairB_x++)
+  //   {
+  //     var chairBottom = chairB.create(chairB_x * 48, 50 + chairB_x, 'Chair2');
+  //   }
+  // }
+
   chairB = game.add.sprite(250 ,400 , 'Chair2');
   layerB.add(chairB);
   chairB = game.add.sprite(400 ,400 , 'Chair2');
@@ -160,35 +168,35 @@ function createRoom_1()
 
 
   
-  chairCollider = game.add.sprite(255, 440 , 'ChairColli')
+  chairCollider = game.add.sprite(250, 420 , 'ChairColli')
   game.physics.enable(chairCollider, Phaser.Physics.ARCADE);
   chairCollider.body.immovable = true;
 
-  chairCollider2 = game.add.sprite(405, 440 , 'ChairColli')
+  chairCollider2 = game.add.sprite(400, 420 , 'ChairColli')
   game.physics.enable(chairCollider2, Phaser.Physics.ARCADE);
   chairCollider2.body.immovable = true;
 
-  chairCollider3 = game.add.sprite(555, 440 , 'ChairColli')
+  chairCollider3 = game.add.sprite(550, 420 , 'ChairColli')
   game.physics.enable(chairCollider3, Phaser.Physics.ARCADE);
   chairCollider3.body.immovable = true;
 
-  chairCollider4 = game.add.sprite(705, 440 , 'ChairColli')
+  chairCollider4 = game.add.sprite(700, 420 , 'ChairColli')
   game.physics.enable(chairCollider4, Phaser.Physics.ARCADE);
   chairCollider4.body.immovable = true;
      //Row 2
-  chairCollider5 = game.add.sprite(255, 590 , 'ChairColli')
+  chairCollider5 = game.add.sprite(250, 570 , 'ChairColli')
   game.physics.enable(chairCollider5, Phaser.Physics.ARCADE);
   chairCollider5.body.immovable = true;
 
-  chairCollider6 = game.add.sprite(405, 590 , 'ChairColli')
+  chairCollider6 = game.add.sprite(400, 570 , 'ChairColli')
   game.physics.enable(chairCollider6, Phaser.Physics.ARCADE);
   chairCollider6.body.immovable = true;
 
-  chairCollider7 = game.add.sprite(555, 590 , 'ChairColli')
+  chairCollider7 = game.add.sprite(550, 570 , 'ChairColli')
   game.physics.enable(chairCollider7, Phaser.Physics.ARCADE);
   chairCollider7.body.immovable = true;
 
-  chairCollider8 = game.add.sprite(705, 590 , 'ChairColli')
+  chairCollider8 = game.add.sprite(700, 570 , 'ChairColli')
   game.physics.enable(chairCollider8, Phaser.Physics.ARCADE);
   chairCollider8.body.immovable = true;
 
@@ -273,7 +281,6 @@ function updateRoom_1()
     player.body.velocity.y = -300;
     player.animations.play('walku', 5 , true);
   }
-
   else if (cursors.left.isDown) {
     player.body.velocity.x= -300;
     player.animations.play('walkl', 5 , true)
