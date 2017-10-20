@@ -30,6 +30,8 @@ function preloadtMenu()
   game.load.audio('howtos','assets/music/b2.mp3')
   game.load.audio('bgmg','assets/music/bgm all1.30.mp3')
   game.load.audio('fs','assets/music/fs.mp3')
+  game.load.audio('endcbgm','assets/music/Endcredit.mp3')
+  game.load.audio('odoor','assets/music/odoor.mp3')
 
 }
 var menubgmusic
@@ -55,6 +57,8 @@ function createtMenu()
       howtos = game.add.audio('howtos')
       bgmg = game.add.audio('bgmg')
       fs = game.add.audio('fs')
+      endcbgm = game.add.audio('endcbgm')
+      odoor = game.add.audio('odoor')
 //     var bar = game.add.graphics();
 //     bar.beginFill(0x000000, 0.2);
 //     bar.drawRect(0, 400, 1000, 100);
@@ -378,6 +382,7 @@ function updateRoom_1()
 }
 function collisionHandler(player,classroomdoor)
 {
+  odoor.play()
   game.state.add('stage2',stage2)
   game.state.start('stage2')
 }
@@ -732,10 +737,28 @@ function updateteacher2() {
   if (cursors.up.isDown) {
     player.body.velocity.y = -300;
     player.animations.play('walku', 5, true);
+    if(!fs.isPlaying){fs.play()}
   }
-
+ else if (cursors.left.isDown) {
+    player.body.velocity.x = -300;
+    player.animations.play('walkl', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else if (cursors.right.isDown) {
+    player.body.velocity.x = 300;
+    player.animations.play('walkr', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else if (cursors.down.isDown) {
+    player.body.velocity.y = 300;
+    player.animations.play('walkd', 5, true)
+    if(!fs.isPlaying){fs.play()}
+  }
+  else {
+    player.animations.stop();
+  }
+}
 function TOclassroom()
   {
     game.state.start('classroom_1_out')
   }
-}
